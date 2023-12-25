@@ -1,0 +1,73 @@
+{
+	"name": "training-pipeline-devcontainer",
+	"build": {
+		"context": "../../training-pipeline",
+		"dockerfile": "../../training-pipeline/Dockerfile"
+	},
+
+	"workspaceFolder": "/app",
+	"workspaceMount": "source=${localWorkspaceFolder}/training-pipeline,target=/app,type=bind,consistency=delegated",
+	"mounts": [
+		"source=${localEnv:HOME}/.gitconfig,target=/etc/gitconfig,type=bind,consistency=delegated"
+	],
+
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {
+			"ppa": true,
+			"version": "latest"
+		},
+		"ghcr.io/jungaretti/features/make:1": {}
+	},
+
+	"postCreateCommand": "poetry install",
+
+	"customizations": {
+		"vscode": {
+		  "extensions": [
+			"ms-python.python",
+			"ms-python.vscode-pylance",
+			"ms-python.flake8",
+			"ms-python.pylint",
+			"ms-python.black-formatter",
+			"ms-python.isort",
+			"ms-toolsai.jupyter",
+			"ms-toolsai.jupyter-renderers",
+			"eamodio.gitlens",
+			"usernamehw.errorlens",
+			"njpwerner.autodocstring",
+			"KevinRose.vsc-python-indent",
+			"tamasfe.even-better-toml",
+			"redhat.vscode-yaml", 
+			"yzhang.markdown-all-in-one", 
+			"GitHub.vscode-github-actions",
+			"wayou.vscode-todo-highlight",
+			"mikestead.dotenv" 
+			// "IBM.output-colorizer",
+			// "ms-kubernetes-tools.vscode-kubernetes-tools"
+			],
+
+			"settings": {
+				"editor.rulers": [
+					120
+				],
+				"files.trimFinalNewlines": true,
+				"files.trimTrailingWhitespace": true,
+				"files.insertFinalNewline": true,
+				"isort.args": [
+					"--settings-path=/app/pyproject.toml"
+				],
+				"python.formatting.blackArgs": [
+					"--config=/app/pyproject.toml"
+				],
+				"editor.formatOnSave": true,
+				"[python]": {
+					"editor.defaultFormatter": "ms-python.flake8",
+					"editor.formatOnSave": true,
+					"editor.codeActionsOnSave": {
+						"source.organizeImports": true
+					}
+				}
+			}
+		}
+	}
+}
